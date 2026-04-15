@@ -6,6 +6,7 @@
 - Wrapper landing page: https://washways.org/globalMARScreener/
 - Repository: https://github.com/washways/globalMARScreener
 - Full methodology: ./METHODOLOGY.md
+- License: MIT, see ./LICENSE
 
 ## 1. Overview
 
