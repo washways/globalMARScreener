@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global MARS Screener | WASHways</title>
+  <meta name="description" content="A satellite-powered screening tool for identifying landscapes where managed aquifer recharge may be more suitable for further investigation." />
+  <meta name="theme-color" content="#184e63" />
+  <link rel="icon" type="image/svg+xml" href="site/favicon.svg" />
+  <link rel="canonical" href="https://washways.org/globalMARScreener/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WASHways" />
+  <meta property="og:title" content="Global MARS Screener" />
+  <meta property="og:description" content="Explore a global screening map for managed aquifer recharge suitability, intervention settings, and supporting hydrogeomorphic diagnostics." />
+  <meta property="og:url" content="https://washways.org/globalMARScreener/" />
+  <meta property="og:image" content="https://washways.org/globalMARScreener/site/social-preview.svg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Global MARS Screener" />
+  <meta name="twitter:description" content="Screen where managed aquifer recharge may be more promising using open geospatial datasets in Google Earth Engine." />
+  <meta name="twitter:image" content="https://washways.org/globalMARScreener/site/social-preview.svg" />
+
+  <style>
+    :root {
+      --brand: #184e63;
+      --brand-dark: #103847;
+      --brand-soft: #edf6f8;
+      --text: #21313c;
+      --muted: #5d7180;
+      --line: #dbe5ea;
+      --card: #ffffff;
+      --accent: #2a9d8f;
+      --warning: #fff6df;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: #f6fafb;
+      line-height: 1.6;
+    }
+
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+      color: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    }
+
+    .header-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+
+    .brand-badge {
+      width: 2.1rem;
+      height: 2.1rem;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.24);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    nav a {
+      color: white;
+      font-size: 0.95rem;
+      opacity: 0.95;
+    }
+
+    .cta {
+      display: inline-block;
+      padding: 0.72rem 1rem;
+      border-radius: 999px;
+      background: white;
+      color: var(--brand-dark);
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    .subnav {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 1rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .subnav a {
+      color: white;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 999px;
+      padding: 0.38rem 0.7rem;
+      font-size: 0.88rem;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 1.2rem 1rem 3rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 1rem;
+      box-shadow: 0 8px 24px rgba(20,52,65,0.06);
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      line-height: 1.1;
+      margin: 0 0 0.7rem;
+      color: var(--brand-dark);
+    }
+
+    .hero-copy p {
+      margin: 0.7rem 0;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .pill {
+      border-radius: 999px;
+      background: var(--brand-soft);
+      color: var(--brand-dark);
+      padding: 0.36rem 0.72rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .notice {
+      background: var(--warning);
+      border-left: 4px solid #e2aa16;
+      padding: 0.8rem 0.9rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+      font-size: 0.96rem;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 0.72rem 1rem;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .button-primary {
+      background: var(--brand);
+      color: white;
+    }
+
+    .button-secondary {
+      background: #eef4f7;
+      color: var(--brand-dark);
+      border: 1px solid var(--line);
+    }
+
+    .map-wrap {
+      padding: 0.4rem;
+    }
+
+    .map-frame {
+      width: 100%;
+      min-height: 70vh;
+      border: none;
+      border-radius: 14px;
+      background: #eaf1f4;
+    }
+
+    .map-note {
+      margin-top: 0.85rem;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    section {
+      margin-top: 1rem;
+    }
+
+    .section-title {
+      margin: 0 0 0.35rem;
+      color: var(--brand-dark);
+      font-size: 1.6rem;
+    }
+
+    .section-intro {
+      margin: 0 0 1rem;
+      color: var(--muted);
+    }
+
+    .grid-2, .grid-4, .grid-5 {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+    .card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: 0 6px 18px rgba(20,52,65,0.04);
+    }
+
+    .card h3, .card h4 {
+      margin-top: 0;
+      color: var(--brand-dark);
+    }
+
+    .metric {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.45rem;
+    }
+
+    ol, ul {
+      padding-left: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.85rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef5f7;
+      color: var(--brand-dark);
+      font-size: 0.95rem;
+    }
+
+    .callout {
+      margin-top: 1rem;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      background: #eef8f6;
+      border-left: 4px solid var(--accent);
+    }
+
+    footer {
+      margin-top: 2rem;
+      background: linear-gradient(135deg, var(--brand-dark) 0%, #0b2631 100%);
+      color: white;
+    }
+
+    .footer-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .footer-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1rem;
+      margin-top: 0.8rem;
+    }
+
+    .footer-links a {
+      color: white;
+    }
+
+    .footer-note {
+      margin-top: 1rem;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero, .grid-2, .grid-4, .grid-5, .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .map-frame {
+        min-height: 62vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-badge">🌍</span>
+        <span>Global MARS Screener</span>
+      </div>
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#methodology">How it works</a>
+        <a href="#outputs">Outputs</a>
+        <a href="#data">Data</a>
+        <a href="#limitations">Limitations</a>
+        <a href="https://github.com/washways/globalMARScreener" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="cta" href="https://washways.projects.earthengine.app/view/globalmarscreener" target="_blank" rel="noopener noreferrer">Open App ↗</a>
+      </nav>
+    </div>
+    <div class="subnav">
+      <a href="#use">How to use</a>
+      <a href="#interventions">Intervention settings</a>
+      <a href="#next-steps">Next steps</a>
+      <a href="https://github.com/washways/globalMARScreener/blob/main/README.md" target="_blank" rel="noopener noreferrer">README</a>
+      <a href="https://github.com/washways/globalMARScreener/blob/main/METHODOLOGY.md" target="_blank" rel="noopener noreferrer">Methodology</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="panel hero-copy" id="overview">
+        <h1>Managed aquifer recharge screening at global scale</h1>
+        <p>
+          The Global MARS Screener is a Google Earth Engine wrapper for exploring where landscapes may be more suitable for managed aquifer recharge investigation across countries, ADM1 regions, and ADM2 districts.
+        </p>
+        <p>
+          It combines hydrogeomorphic opportunity, broad physical feasibility, screening-level constraints, and intervention-setting guidance into a single interactive map.
+        </p>
+
+        <div class="pill-row">
+          <span class="pill">Opportunity</span>
+          <span class="pill">Feasibility</span>
+          <span class="pill">Constraint</span>
+          <span class="pill">Confidence</span>
+          <span class="pill">Intervention setting</span>
+        </div>
+
+        <div class="button-row">
+          <a class="button button-primary" href="https://washways.projects.earthengine.app/view/globalmarscreener" target="_blank" rel="noopener noreferrer">Open the interactive app</a>
+          <a class="button button-secondary" href="https://github.com/washways/globalMARScreener" target="_blank" rel="noopener noreferrer">View repository</a>
+        </div>
+
+        <div class="notice">
+          Strong suitability is a screening hypothesis, not a final siting decision. Always verify with field hydrogeology, aquifer testing, water-quality assessment, safeguards review, and engineering design.
+        </div>
+      </div>
+
+      <div class="panel map-wrap">
+        <iframe
+          class="map-frame"
+          src="https://washways.projects.earthengine.app/view/globalmarscreener"
+          title="Global MARS Screener map"
+          loading="lazy">
+        </iframe>
+        <div class="map-note">
+          If the embedded map does not load in your browser, use <a href="https://washways.projects.earthengine.app/view/globalmarscreener" target="_blank" rel="noopener noreferrer">the direct app link</a>.
+        </div>
+      </div>
+    </section>
+
+    <section id="methodology" class="panel">
+      <h2 class="section-title">How it works</h2>
+      <p class="section-intro">
+        The app is designed as a transparent GIS screening tool, not a black box. It evaluates where recharge opportunity appears plausible, where the terrain and land surface may be practically feasible, and where constraints or caution flags are stronger.
+      </p>
+
+      <div class="grid-5">
+        <div class="card">
+          <div class="metric">1</div>
+          <h3>Opportunity</h3>
+          <p>Highlights hydrogeomorphic settings where runoff concentration, valley position, footslope tendency, or drainage adjacency may support recharge interventions.</p>
+        </div>
+        <div class="card">
+          <div class="metric">2</div>
+          <h3>Feasibility</h3>
+          <p>Summarises broad terrain, land-cover, soil-water, and depth-to-bedrock conditions that make practical recharge more or less plausible.</p>
+        </div>
+        <div class="card">
+          <div class="metric">3</div>
+          <h3>Constraint</h3>
+          <p>Flags areas where steep slopes, built-up land, ridges, or excessive wetness may reduce suitability or require added caution.</p>
+        </div>
+        <div class="card">
+          <div class="metric">4</div>
+          <h3>Confidence</h3>
+          <p>Provides a broad indication of where the evidence base is stronger versus where results should be treated more cautiously.</p>
+        </div>
+        <div class="card">
+          <div class="metric">5</div>
+          <h3>Combined suitability</h3>
+          <p>The main display blends the signals above into a relative screening surface to help prioritise where detailed follow-up may be worthwhile.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        The model uses transparent expert-judgement defaults and open geospatial datasets. Results are relative to the selected area and should be interpreted locally.
+      </div>
+    </section>
+
+    <section id="outputs" class="panel">
+      <h2 class="section-title">Main outputs</h2>
+      <p class="section-intro">The app supports map exploration rather than a single yes-or-no answer.</p>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Primary layers</h3>
+          <ul>
+            <li>Combined suitability class</li>
+            <li>Combined suitability continuous score</li>
+            <li>Combined opportunity class</li>
+            <li>Recommended MAR intervention setting</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Supporting layers</h3>
+          <ul>
+            <li>Opportunity</li>
+            <li>Feasibility</li>
+            <li>Constraint</li>
+            <li>Confidence</li>
+            <li>Diagnostic inputs</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="interventions" class="panel">
+      <h2 class="section-title">Intervention settings</h2>
+      <p class="section-intro">These are broad hydrogeomorphic typologies to guide next-stage investigation, not final engineering prescriptions.</p>
+      <div class="grid-4">
+        <div class="card">
+          <h3>Riverbank / floodplain</h3>
+          <p>Low-lying, drainage-adjacent zones that may suit riverbank filtration, flood spreading, off-channel basins, or alluvial recharge where local conditions allow.</p>
+        </div>
+        <div class="card">
+          <h3>Tributary / valley</h3>
+          <p>Smaller valleys and tributary corridors that may support check dams, sand dams, recharge weirs, and small valley-spreading approaches.</p>
+        </div>
+        <div class="card">
+          <h3>Footslope / colluvial</h3>
+          <p>Lower-slope transition areas that may be more promising for infiltration trenches, contour bunds, managed runoff capture, and recharge-supporting soil and water conservation.</p>
+        </div>
+        <div class="card">
+          <h3>Upland / distributed</h3>
+          <p>Open, gentle terrain that may be better suited to distributed recharge enhancement and landscape-scale infiltration support rather than large engineered structures.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="use" class="panel">
+      <h2 class="section-title">How to use the app</h2>
+      <p class="section-intro">A typical workflow for planners, hydrogeologists, and GIS teams.</p>
+      <ol>
+        <li>Select a country and, if needed, narrow to ADM1 or ADM2.</li>
+        <li>Run the current selection to generate the screening layers.</li>
+        <li>Use the layer selector to switch between suitability, intervention, opportunity, feasibility, constraint, confidence, and diagnostics.</li>
+        <li>Adjust opacity to compare the model output with the administrative boundary and base map.</li>
+        <li>Interpret high-signal areas as candidates for follow-up investigation, not as confirmed MAR sites.</li>
+      </ol>
+      <div class="callout">
+        National outputs are useful for strategic screening. District-scale interpretation is more helpful for local prioritisation, but still requires ground validation.
+      </div>
+    </section>
+
+    <section id="data" class="panel">
+      <h2 class="section-title">Data sources</h2>
+      <p class="section-intro">The tool combines global terrain, hydrography, land cover, and soil datasets, plus two WASHways-managed assets.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Dataset</th>
+            <th>Source</th>
+            <th>Main role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GAUL boundaries</td>
+            <td>FAO/GAUL/2015 levels 0–2</td>
+            <td>Country, ADM1, and ADM2 selection</td>
+          </tr>
+          <tr>
+            <td>FABDEM</td>
+            <td>projects/sat-io/open-datasets/FABDEM</td>
+            <td>Slope and terrain processing</td>
+          </tr>
+          <tr>
+            <td>MERIT Hydro</td>
+            <td>MERIT/Hydro/v1_0_1</td>
+            <td>Elevation, upstream area, HAND, convergence context</td>
+          </tr>
+          <tr>
+            <td>ESA WorldCover</td>
+            <td>ESA/WorldCover/v200</td>
+            <td>Open land and built-up risk</td>
+          </tr>
+          <tr>
+            <td>ERGo landforms</td>
+            <td>CSP/ERGo/1_0/Global/SRTM_landforms</td>
+            <td>Valley, slope, and ridge classification</td>
+          </tr>
+          <tr>
+            <td>OpenLandMap field capacity</td>
+            <td>OpenLandMap soil water content</td>
+            <td>Soil-water storage modifier</td>
+          </tr>
+          <tr>
+            <td>Depth to bedrock</td>
+            <td>projects/washways/assets/BDTICMM250m</td>
+            <td>Storage and regolith headroom proxy</td>
+          </tr>
+          <tr>
+            <td>Aridity index</td>
+            <td>projects/washways/assets/AridityIndexv31yrFixed</td>
+            <td>Climate modifier for recharge relevance</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="limitations" class="panel">
+      <h2 class="section-title">Limitations and caveats</h2>
+      <p class="section-intro">Use this tool to prioritise where to look next, not to skip fieldwork.</p>
+      <div class="grid-2">
+        <div class="card">
+          <ul>
+            <li>Screening tool only; not a final site-selection model</li>
+            <li>Does not replace field hydrogeology, geophysics, monitoring, or engineering design</li>
+            <li>Relative scores are influenced by local normalisation within the selected area</li>
+            <li>Global datasets cannot fully capture fracture connectivity or aquifer hydraulics</li>
+          </ul>
+        </div>
+        <div class="card">
+          <ul>
+            <li>Does not assess water quality, legal restrictions, safeguards, or lifecycle cost</li>
+            <li>Some inputs are proxies rather than direct measurements</li>
+            <li>Built-up or flood-prone areas may still require strong caution even when opportunity looks high</li>
+            <li>All outputs should be checked against local data and expertise</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="next-steps" class="panel">
+      <h2 class="section-title">Recommended next steps</h2>
+      <p class="section-intro">After screening a country or district, the next step is evidence gathering.</p>
+      <ul>
+        <li>Review geology, regolith, and existing groundwater information for the highlighted areas.</li>
+        <li>Cross-check with borehole logs, groundwater levels, and known recharge structures where available.</li>
+        <li>Assess water quality, land tenure, safeguards, access, and flood behavior before investment.</li>
+        <li>Use local hydrogeological expertise to recalibrate or reinterpret the screening outputs where needed.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-card">
+          <h3>Ready to explore?</h3>
+          <p>Launch the interactive Global MARS Screener in Google Earth Engine.</p>
+          <p>
+            <a class="button button-primary" href="https://washways.projects.earthengine.app/view/globalmarscreener" target="_blank" rel="noopener noreferrer">Open the interactive app</a>
+          </p>
+        </div>
+        <div class="footer-card">
+          <h3>Project links</h3>
+          <div class="footer-links">
+            <a href="https://github.com/washways/globalMARScreener" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://github.com/washways/globalMARScreener/blob/main/README.md" target="_blank" rel="noopener noreferrer">README</a>
+            <a href="https://github.com/washways/globalMARScreener/blob/main/METHODOLOGY.md" target="_blank" rel="noopener noreferrer">Full Methodology</a>
+            <a href="https://github.com/washways/globalMARScreener/blob/main/docs/deployment.md" target="_blank" rel="noopener noreferrer">Deployment</a>
+            <a href="https://github.com/washways/globalMARScreener/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>
+            <a href="https://washways.org/" target="_blank" rel="noopener noreferrer">WASHways</a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwashways.org%2FglobalMARScreener%2F" target="_blank" rel="noopener noreferrer">Share on LinkedIn</a>
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwashways.org%2FglobalMARScreener%2F&text=Explore%20the%20Global%20MARS%20Screener" target="_blank" rel="noopener noreferrer">Share on X</a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwashways.org%2FglobalMARScreener%2F" target="_blank" rel="noopener noreferrer">Share on Facebook</a>
+          </div>
+          <p class="footer-note">
+            This is a screening tool. Always verify results with hydrogeological field investigation and local expertise.<br />
+            Built by WASHways. <span id="year">2026</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
