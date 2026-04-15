@@ -1,35 +1,109 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Global MAR Screener social preview">
   <defs>
-    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0%" stop-color="#0d3140"/>
-      <stop offset="50%" stop-color="#184e63"/>
-      <stop offset="100%" stop-color="#277681"/>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0b3b55"/>
+      <stop offset="55%" stop-color="#2f8eb2"/>
+      <stop offset="100%" stop-color="#d8f3e8"/>
     </linearGradient>
-    <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#9ff3de" stop-opacity="0.65"/>
-      <stop offset="100%" stop-color="#9ff3de" stop-opacity="0"/>
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff5b5" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#fff5b5" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.32"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-    </radialGradient>
+    <linearGradient id="hillBack" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#6fa2a8"/>
+      <stop offset="100%" stop-color="#87b6b1"/>
+    </linearGradient>
+    <linearGradient id="hillFront" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#7fc050"/>
+      <stop offset="100%" stop-color="#95d161"/>
+    </linearGradient>
+    <linearGradient id="waterTop" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#0ca6d8"/>
+      <stop offset="60%" stop-color="#71dbf2"/>
+      <stop offset="100%" stop-color="#1ab1de"/>
+    </linearGradient>
+    <linearGradient id="soil" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#8d6538"/>
+      <stop offset="100%" stop-color="#5e3f22"/>
+    </linearGradient>
+    <linearGradient id="subsoil" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ba9460"/>
+      <stop offset="100%" stop-color="#8b663f"/>
+    </linearGradient>
+    <linearGradient id="aquifer" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#1bb1dd"/>
+      <stop offset="100%" stop-color="#0b6ea6"/>
+    </linearGradient>
   </defs>
 
-  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#sky)"/>
+  <circle cx="445" cy="350" r="105" fill="url(#sunGlow)"/>
+  <circle cx="440" cy="350" r="46" fill="#fff0a6" opacity="0.95"/>
 
-  <circle cx="900" cy="210" r="220" fill="url(#glow1)"/>
-  <circle cx="1010" cy="420" r="210" fill="url(#glow2)"/>
-  <circle cx="230" cy="130" r="120" fill="#ffffff" opacity="0.06"/>
+  <path d="M0 362 C120 330, 225 305, 340 298 C455 291, 585 310, 695 292 C815 272, 928 280, 1200 320 L1200 455 L0 455 Z" fill="url(#hillBack)" opacity="0.62"/>
+  <path d="M0 385 C110 350, 250 340, 372 360 C490 380, 610 372, 742 345 C890 316, 1045 326, 1200 355 L1200 470 L0 470 Z" fill="url(#hillFront)"/>
 
-  <g opacity="0.28">
-    <path d="M60 470c110-55 188-70 268-46 72 22 129 22 203-8 72-28 122-30 190-7 72 24 119 22 199-14" fill="none" stroke="#d7f3ef" stroke-width="12" stroke-linecap="round"/>
-    <path d="M90 400c88-45 148-56 206-37 58 18 109 19 167-6 58-25 105-28 160-10 62 20 117 18 187-12" fill="none" stroke="#9fe6da" stroke-width="8" stroke-linecap="round"/>
+  <path d="M0 390 C120 340, 270 350, 410 385 C555 420, 675 420, 790 386 C920 348, 1050 350, 1200 385 L1200 455 L0 455 Z" fill="#7ec44f"/>
+  <path d="M0 395 C130 420, 250 430, 380 425 C505 420, 640 418, 760 420 C905 422, 1060 416, 1200 398 L1200 510 L0 510 Z" fill="url(#waterTop)"/>
+  <path d="M0 423 C210 440, 390 443, 590 439 C780 434, 995 435, 1200 425" fill="none" stroke="#dfffff" stroke-width="3" opacity="0.65"/>
+  <path d="M0 438 C200 454, 425 456, 650 452 C850 448, 1025 446, 1200 438" fill="none" stroke="#dfffff" stroke-width="2" opacity="0.42"/>
+
+  <g opacity="0.96">
+    <rect x="0" y="470" width="1200" height="160" fill="url(#subsoil)"/>
+    <path d="M0 500 C140 485, 285 470, 430 470 C620 470, 760 492, 875 508 C980 520, 1080 514, 1200 500 L1200 630 L0 630 Z" fill="url(#soil)"/>
+    <ellipse cx="742" cy="540" rx="320" ry="96" fill="url(#aquifer)" opacity="0.96"/>
+    <ellipse cx="742" cy="540" rx="320" ry="96" fill="none" stroke="#b8f5ff" stroke-width="4" opacity="0.45"/>
   </g>
 
-  <circle cx="865" cy="246" r="94" fill="none" stroke="#ffffff" stroke-opacity="0.6" stroke-width="12"/>
-  <circle cx="865" cy="246" r="38" fill="#b9fff0" fill-opacity="0.78"/>
-  <path d="M812 248c16-12 31-17 49-13 15 4 28 5 55-8" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+  <g fill="#7cecff" opacity="0.50">
+    <circle cx="520" cy="560" r="6"/><circle cx="548" cy="532" r="8"/><circle cx="580" cy="576" r="10"/>
+    <circle cx="618" cy="547" r="7"/><circle cx="654" cy="585" r="9"/><circle cx="692" cy="553" r="6"/>
+    <circle cx="726" cy="578" r="11"/><circle cx="760" cy="545" r="8"/><circle cx="798" cy="583" r="10"/>
+    <circle cx="834" cy="548" r="7"/><circle cx="868" cy="577" r="9"/><circle cx="904" cy="553" r="8"/>
+    <circle cx="938" cy="584" r="10"/><circle cx="970" cy="546" r="7"/>
+  </g>
 
-  <text x="78" y="240" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="72" font-weight="700">Global MAR</text>
-  <text x="78" y="324" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="72" font-weight="700">Screener</text>
+  <g fill="#5db634">
+    <circle cx="46" cy="350" r="46"/><circle cx="78" cy="324" r="42"/><circle cx="106" cy="356" r="40"/><circle cx="62" cy="385" r="36"/>
+    <rect x="54" y="372" width="12" height="74" fill="#6c4726"/>
+    <circle cx="1150" cy="350" r="46"/><circle cx="1182" cy="324" r="42"/><circle cx="1118" cy="356" r="40"/><circle cx="1158" cy="385" r="36"/>
+    <rect x="1148" y="372" width="12" height="74" fill="#6c4726"/>
+  </g>
+
+  <g fill="#e8ffff" opacity="0.95">
+    <g transform="translate(662 70)">
+      <circle cx="36" cy="35" r="26"/><circle cx="66" cy="28" r="33"/><circle cx="100" cy="38" r="28"/><circle cx="18" cy="48" r="22"/><circle cx="86" cy="52" r="24"/>
+    </g>
+    <g transform="translate(950 72)">
+      <circle cx="36" cy="35" r="26"/><circle cx="66" cy="28" r="33"/><circle cx="100" cy="38" r="28"/><circle cx="18" cy="48" r="22"/><circle cx="86" cy="52" r="24"/>
+    </g>
+  </g>
+
+  <g fill="#6ee8ff" opacity="0.75">
+    <ellipse cx="708" cy="145" rx="4" ry="12"/><ellipse cx="724" cy="162" rx="4" ry="12"/><ellipse cx="742" cy="148" rx="4" ry="12"/>
+    <ellipse cx="768" cy="164" rx="4" ry="12"/><ellipse cx="788" cy="150" rx="4" ry="12"/><ellipse cx="1000" cy="148" rx="4" ry="12"/>
+    <ellipse cx="1018" cy="164" rx="4" ry="12"/><ellipse cx="1036" cy="151" rx="4" ry="12"/><ellipse cx="1056" cy="166" rx="4" ry="12"/>
+    <ellipse cx="1074" cy="149" rx="4" ry="12"/>
+  </g>
+
+  <g stroke="#dffcff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.92">
+    <path d="M716 180 L716 380" stroke-dasharray="1 17"/>
+    <path d="M842 180 L842 380" stroke-dasharray="1 17"/>
+    <path d="M968 180 L968 380" stroke-dasharray="1 17"/>
+    <path d="M716 380 L716 455"/>
+    <path d="M842 380 L842 455"/>
+    <path d="M968 380 L968 455"/>
+    <path d="M692 430 L716 455 L740 430"/>
+    <path d="M818 430 L842 455 L866 430"/>
+    <path d="M944 430 L968 455 L992 430"/>
+    <path d="M716 455 L716 540"/>
+    <path d="M842 455 L842 540"/>
+    <path d="M968 455 L968 540"/>
+    <path d="M692 510 L716 540 L740 510"/>
+    <path d="M818 510 L842 540 L866 510"/>
+    <path d="M944 510 L968 540 L992 510"/>
+  </g>
+
+  <text x="70" y="150" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="70" font-weight="700">Global MAR</text>
+  <text x="70" y="235" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="70" font-weight="700">Screener</text>
 </svg>
