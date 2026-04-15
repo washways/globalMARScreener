@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The Global MARS Screener is a screening-oriented Google Earth Engine application for exploring where managed aquifer recharge may be more suitable for follow-up investigation.
+The Global Managed Aquifer Recharge Screener is a screening-oriented Google Earth Engine application for exploring where managed aquifer recharge may be more suitable for follow-up investigation.
 
 This repository adds a lightweight public wrapper around the published Earth Engine app so users can access the map, supporting explanation, and documentation from a single landing page.
 

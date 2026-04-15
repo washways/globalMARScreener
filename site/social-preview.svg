@@ -8,8 +8,9 @@
   <rect width="1200" height="630" fill="url(#g)"/>
   <circle cx="920" cy="180" r="110" fill="#2a9d8f" opacity="0.25"/>
   <circle cx="1040" cy="420" r="150" fill="#ffffff" opacity="0.08"/>
-  <text x="80" y="180" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="58" font-weight="700">Global MARS Screener</text>
-  <text x="80" y="250" fill="#d7eef2" font-family="Segoe UI, Arial, sans-serif" font-size="30">Managed aquifer recharge screening in Google Earth Engine</text>
+  <text x="80" y="165" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="46" font-weight="700">Global Managed Aquifer</text>
+  <text x="80" y="220" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="46" font-weight="700">Recharge Screener</text>
+  <text x="80" y="285" fill="#d7eef2" font-family="Segoe UI, Arial, sans-serif" font-size="30">Managed aquifer recharge screening in Google Earth Engine</text>
   <text x="80" y="350" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="26">Opportunity • Feasibility • Constraint • Confidence</text>
   <text x="80" y="410" fill="#bfe7df" font-family="Segoe UI, Arial, sans-serif" font-size="24">Built by WASHways</text>
 </svg>

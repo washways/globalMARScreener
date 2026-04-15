@@ -1,6 +1,6 @@
 # Earth Engine source note
 
-This repository currently wraps the published Global MARS Screener Earth Engine app and provides the public landing page, methodology, and supporting documentation.
+This repository currently wraps the published Global Managed Aquifer Recharge Screener Earth Engine app and provides the public landing page, methodology, and supporting documentation.
 
 Live app:
 https://washways.projects.earthengine.app/view/globalmarscreener

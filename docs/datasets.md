@@ -1,6 +1,6 @@
 # Dataset Summary
 
-The Global MARS Screener uses global geospatial inputs available in or compatible with Google Earth Engine, plus two WASHways-managed assets.
+The Global Managed Aquifer Recharge Screener uses global geospatial inputs available in or compatible with Google Earth Engine, plus two WASHways-managed assets.
 
 ## Core inputs
 

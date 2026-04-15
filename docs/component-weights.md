@@ -1,6 +1,6 @@
 # Default Weighting Notes
 
-The Global MARS Screener uses transparent expert-judgement defaults intended for screening and prioritisation, not statistically calibrated prediction.
+The Global Managed Aquifer Recharge Screener uses transparent expert-judgement defaults intended for screening and prioritisation, not statistically calibrated prediction.
 
 ## Main idea
 

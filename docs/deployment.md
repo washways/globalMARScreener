@@ -1,6 +1,6 @@
 # Deployment Guide
 
-This repository is designed to act as a lightweight public wrapper around the published Global MARS Screener Earth Engine app.
+This repository is designed to act as a lightweight public wrapper around the published Global Managed Aquifer Recharge Screener Earth Engine app.
 
 ## Canonical public links
 

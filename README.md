@@ -1,4 +1,4 @@
-# Global MARS Screener
+# Global Managed Aquifer Recharge Screener
 
 ## Quick links
 
@@ -10,7 +10,7 @@
 
 ## 1. Overview
 
-The Global MARS Screener is a Google Earth Engine application for screening managed aquifer recharge potential across countries, ADM1 areas, and ADM2 areas. It combines global terrain, hydrography, land-cover, soil, aridity, and depth-to-bedrock datasets to generate relative suitability layers and broad recommended MAR intervention settings.
+The Global Managed Aquifer Recharge Screener is a Google Earth Engine application for screening managed aquifer recharge potential across countries, ADM1 areas, and ADM2 areas. It combines global terrain, hydrography, land-cover, soil, aridity, and depth-to-bedrock datasets to generate relative suitability layers and broad recommended MAR intervention settings.
 
 The tool is designed as a screening application. It is not a final site-selection model and does not replace field investigation, aquifer testing, geophysics, groundwater monitoring, water-quality assessment, engineering design, safeguards review, or cost analysis.
 

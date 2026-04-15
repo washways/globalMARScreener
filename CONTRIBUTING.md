@@ -1,6 +1,6 @@
-# Contributing to Global MARS Screener
+# Contributing to Global Managed Aquifer Recharge Screener
 
-Thanks for your interest in improving the Global MARS Screener.
+Thanks for your interest in improving the Global Managed Aquifer Recharge Screener.
 
 ## What contributions are most useful?
 
