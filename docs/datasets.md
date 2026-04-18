@@ -1,6 +1,6 @@
 # Dataset Summary
 
-The Global Managed Aquifer Recharge Screener uses global geospatial inputs available in or compatible with Google Earth Engine, plus two WASHways-managed assets.
+The Global Managed Aquifer Recharge Screener uses global geospatial inputs available in or compatible with Google Earth Engine, plus four uploaded WASHways-managed assets. Two of those uploaded assets are now central hydrogeology inputs.
 
 ## Core inputs
 
@@ -16,10 +16,22 @@ The Global Managed Aquifer Recharge Screener uses global geospatial inputs avail
 | OpenLandMap field capacity | OpenLandMap/SOL/SOL_WATERCONTENT-33KPA_USDA-4B1C_M/v01 | Soil-water storage proxy |
 | Depth to bedrock | projects/washways/assets/BDTICMM250m | Storage headroom / regolith proxy |
 | Aridity index | projects/washways/assets/AridityIndexv31yrFixed | Broad climate modifier |
+| GLiM uploaded asset | projects/washways/assets/glim_global_source | Lithology text source for hydrogeology conditioning |
+| GLHYMPS uploaded asset | projects/washways/assets/glhymps_global_source | Aquifer-property and descriptive hydrogeology source |
+
+## Hydrogeology layer use
+
+The current model directly integrates two uploaded hydrogeology layers.
+
+- GLiM is read primarily from `Litho`, with fallback to `xx`, and is used for lithology-text classification.
+- GLHYMPS is read from `logK_Ferr_`, `Porosity_x`, `K_stdev_x1`, `Transmissi`, `GUM_K`, and `Descriptio`.
+
+These fields are blended into the hydrogeology modifier that affects storage, infiltration, feasibility, constraint, and low-suitability exclusion logic.
 
 ## Important caveats
 
-- The two WASHways assets must be accessible to the Earth Engine account running the model.
+- The uploaded WASHways assets must be accessible to the Earth Engine account running the model.
+- The hydrogeology-conditioned workflow expects both `projects/washways/assets/glim_global_source` and `projects/washways/assets/glhymps_global_source` to exist and be readable.
 - Several inputs are proxies, not direct measurements of infiltration, transmissivity, recharge volume, or water quality.
 - Local interpretation remains essential because global data cannot fully capture aquifer complexity.
 

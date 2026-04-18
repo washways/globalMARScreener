@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Global Managed Aquifer Recharge Screener | WASHways</title>
-  <meta name="description" content="A satellite-powered screening tool for identifying landscapes where managed aquifer recharge may be more suitable for further investigation." />
+  <meta name="description" content="A scale-aware MAR screening tool that blends terrain, hydrology, GLiM lithology, and GLHYMPS hydrogeology into hybrid suitability outputs for further investigation." />
   <meta name="theme-color" content="#184e63" />
   <link rel="icon" type="image/svg+xml" href="site/favicon.svg" />
   <link rel="canonical" href="https://washways.org/globalMARScreener/" />
@@ -12,7 +12,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="WASHways" />
   <meta property="og:title" content="Global Managed Aquifer Recharge Screener" />
-  <meta property="og:description" content="Explore a global screening map for managed aquifer recharge suitability, intervention settings, and supporting hydrogeomorphic diagnostics." />
+  <meta property="og:description" content="Explore a global screening map for hybrid MAR suitability, intervention settings, and diagnostics built from hydrogeomorphology plus GLiM and GLHYMPS." />
   <meta property="og:url" content="https://washways.org/globalMARScreener/" />
   <meta property="og:image" content="https://washways.org/globalMARScreener/site/social-preview.png" />
   <meta property="og:image:alt" content="Global Managed Aquifer Recharge Screener preview card" />
@@ -21,7 +21,7 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Global Managed Aquifer Recharge Screener" />
-  <meta name="twitter:description" content="Screen where managed aquifer recharge may be more promising using open geospatial datasets in Google Earth Engine." />
+  <meta name="twitter:description" content="Screen where managed aquifer recharge may be more promising using terrain, hydrology, GLiM lithology, and GLHYMPS hydrogeology in Google Earth Engine." />
   <meta name="twitter:image" content="https://washways.org/globalMARScreener/site/social-preview.png" />
   <meta name="twitter:image:alt" content="Global Managed Aquifer Recharge Screener preview card" />
 
@@ -415,14 +415,18 @@
           The Global Managed Aquifer Recharge Screener is a Google Earth Engine wrapper for exploring where landscapes may be more suitable for managed aquifer recharge investigation across countries, ADM1 regions, and ADM2 districts.
         </p>
         <p>
-          It combines hydrogeomorphic opportunity, broad physical feasibility, screening-level constraints, and intervention-setting guidance into a single interactive map.
+          It now combines hydrogeomorphic opportunity, broad physical feasibility, screening-level constraints, and direct hydrogeology conditioning from uploaded GLiM and GLHYMPS layers into a single interactive map.
+        </p>
+        <p>
+          The main default output is hybrid suitability, which blends absolute and contextual suitability while reducing contextual influence as the selected area becomes larger.
         </p>
 
         <div class="pill-row">
+          <span class="pill">Hybrid suitability</span>
           <span class="pill">Opportunity</span>
           <span class="pill">Feasibility</span>
           <span class="pill">Constraint</span>
-          <span class="pill">Confidence</span>
+          <span class="pill">GLiM + GLHYMPS</span>
           <span class="pill">Intervention setting</span>
         </div>
 
@@ -453,7 +457,7 @@
     <section id="methodology" class="panel">
       <h2 class="section-title">How it works</h2>
       <p class="section-intro">
-        The app is designed as a transparent GIS screening tool, not a black box. It evaluates where recharge opportunity appears plausible, where the terrain and land surface may be practically feasible, and where constraints or caution flags are stronger.
+        The app is designed as a transparent GIS screening tool, not a black box. It evaluates hydrogeomorphic opportunity, feasibility, constraint, and hydrogeology-conditioned suitability through absolute, contextual, and hybrid pathways.
       </p>
 
       <div class="grid-5">
@@ -465,51 +469,56 @@
         <div class="card">
           <div class="metric">2</div>
           <h3>Feasibility</h3>
-          <p>Summarises broad terrain, land-cover, soil-water, and depth-to-bedrock conditions that make practical recharge more or less plausible.</p>
+          <p>Summarises terrain, land cover, soil-water, depth-to-bedrock, and hydrogeology-conditioned storage and infiltration conditions.</p>
         </div>
         <div class="card">
           <div class="metric">3</div>
           <h3>Constraint</h3>
-          <p>Flags areas where steep slopes, built-up land, ridges, or excessive wetness may reduce suitability or require added caution.</p>
+          <p>Flags areas where steep slopes, built-up land, ridges, excessive wetness, or very poor hydrogeology may reduce suitability or require added caution.</p>
         </div>
         <div class="card">
           <div class="metric">4</div>
-          <h3>Confidence</h3>
-          <p>Provides a broad indication of where the evidence base is stronger versus where results should be treated more cautiously.</p>
+          <h3>Hydrogeology</h3>
+          <p>Uses uploaded GLiM and GLHYMPS layers to build a hydrogeology modifier from lithology text, conductivity, porosity, transmissivity, descriptive text, and uncertainty proxies.</p>
         </div>
         <div class="card">
           <div class="metric">5</div>
-          <h3>Combined suitability</h3>
-          <p>The main display blends the signals above into a relative screening surface to help prioritise where detailed follow-up may be worthwhile.</p>
+          <h3>Hybrid suitability</h3>
+          <p>The main display blends absolute and contextual suitability so screening remains locally useful without relying entirely on within-area ranking for very large regions.</p>
         </div>
       </div>
 
       <div class="callout">
-        The model uses transparent expert-judgement defaults and open geospatial datasets. Results are relative to the selected area and should be interpreted locally.
+        The current build expects two uploaded hydrogeology assets to exist and be accessible: <strong>projects/washways/assets/glim_global_source</strong> and <strong>projects/washways/assets/glhymps_global_source</strong>.
       </div>
     </section>
 
     <section id="outputs" class="panel">
       <h2 class="section-title">Main outputs</h2>
-      <p class="section-intro">The app supports map exploration rather than a single yes-or-no answer.</p>
+      <p class="section-intro">The app supports map exploration rather than a single yes-or-no answer. Hybrid suitability is the main default layer.</p>
       <div class="grid-2">
         <div class="card">
           <h3>Primary layers</h3>
           <ul>
-            <li>Combined suitability class</li>
-            <li>Combined suitability continuous score</li>
-            <li>Combined opportunity class</li>
+            <li>Hybrid suitability class</li>
+            <li>Contextual suitability class</li>
+            <li>Absolute suitability class</li>
+            <li>Hybrid suitability continuous display</li>
+            <li>Contextual opportunity class</li>
+            <li>Absolute opportunity class</li>
             <li>Recommended MAR intervention setting</li>
           </ul>
         </div>
         <div class="card">
           <h3>Supporting layers</h3>
           <ul>
-            <li>Opportunity</li>
+            <li>Riverbank, tributary, footslope, and upland suitability classes</li>
+            <li>Opportunity absolute and opportunity contextual continuous layers</li>
             <li>Feasibility</li>
             <li>Constraint</li>
             <li>Confidence</li>
-            <li>Diagnostic inputs</li>
+            <li>Hydrogeology modifier</li>
+            <li>Debug GLiM and GLHYMPS layers plus terrain and hydrology diagnostics</li>
           </ul>
         </div>
       </div>
@@ -555,7 +564,7 @@
 
     <section id="data" class="panel">
       <h2 class="section-title">Data sources</h2>
-      <p class="section-intro">The tool combines global terrain, hydrography, land cover, and soil datasets, plus two WASHways-managed assets.</p>
+      <p class="section-intro">The tool combines global terrain, hydrography, land cover, soil, and climate datasets with uploaded GLiM and GLHYMPS hydrogeology layers.</p>
       <table>
         <thead>
           <tr>
@@ -605,8 +614,21 @@
             <td>projects/washways/assets/AridityIndexv31yrFixed</td>
             <td>Climate modifier for recharge relevance</td>
           </tr>
+          <tr>
+            <td>GLiM uploaded asset</td>
+            <td>projects/washways/assets/glim_global_source</td>
+            <td>Lithology text source used for hydrogeology conditioning</td>
+          </tr>
+          <tr>
+            <td>GLHYMPS uploaded asset</td>
+            <td>projects/washways/assets/glhymps_global_source</td>
+            <td>Hydraulic conductivity, porosity, transmissivity, class, and description source</td>
+          </tr>
         </tbody>
       </table>
+      <div class="callout">
+        GLiM is read from <strong>Litho</strong> with fallback to <strong>xx</strong>. GLHYMPS is read from <strong>logK_Ferr_</strong>, <strong>Porosity_x</strong>, <strong>K_stdev_x1</strong>, <strong>Transmissi</strong>, <strong>GUM_K</strong>, and <strong>Descriptio</strong>. These are blended into the hydrogeology modifier used in storage, infiltration, feasibility, constraint, and exclusion logic.
+      </div>
     </section>
 
     <section id="limitations" class="panel">
@@ -624,6 +646,7 @@
         <div class="card">
           <ul>
             <li>Does not assess water quality, legal restrictions, safeguards, or lifecycle cost</li>
+            <li>GLiM and GLHYMPS text interpretation remains heuristic and coarse</li>
             <li>Some inputs are proxies rather than direct measurements</li>
             <li>Built-up or flood-prone areas may still require strong caution even when opportunity looks high</li>
             <li>All outputs should be checked against local data and expertise</li>
